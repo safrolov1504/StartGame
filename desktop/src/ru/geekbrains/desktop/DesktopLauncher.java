@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 400;
 		config.height = 600;
-		config.resizable = false;//размер экрана не будет меняться
+		//config.resizable = false;//размер экрана не будет меняться
 		new LwjglApplication(new StartGame(), config);
 	}
 }
