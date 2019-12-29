@@ -28,6 +28,7 @@ public class MenuScreen extends BaseScreen {
 
     private Star[] stars;
 
+
     public MenuScreen(Game game) {
         this.game = game;
     }
@@ -44,7 +45,6 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
         }
-
     }
 
     @Override

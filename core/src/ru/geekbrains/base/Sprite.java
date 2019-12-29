@@ -13,6 +13,9 @@ public class Sprite extends Rect {
     protected TextureRegion[] regions;
     protected int frame;
 
+    public Sprite() {
+    }
+
     public Sprite(TextureRegion region) {
         if(region==null){
             throw  new NullPointerException("Region is null");
@@ -20,6 +23,8 @@ public class Sprite extends Rect {
         regions = new TextureRegion[1];
         regions[0]=region;
     }
+
+
 
     public void setHeightProportion(float height){
         setHeight(height);
