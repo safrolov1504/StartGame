@@ -5,13 +5,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.utils.Regions;
 
 public class Sprite extends Rect {
+    private boolean destroyed;
 
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+
+
 
     public Sprite() {
     }
@@ -24,7 +28,9 @@ public class Sprite extends Rect {
         regions[0]=region;
     }
 
-
+    public Sprite(TextureRegion region, int row, int cols, int frames) {
+        regions = Regions.split(region,row,cols,frames);
+    }
 
     public void setHeightProportion(float height){
         setHeight(height);
@@ -91,5 +97,17 @@ public class Sprite extends Rect {
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void destroyed() {
+        this.destroyed = true;
+    }
+
+    public void flushDestroyed() {
+        this.destroyed = false;
     }
 }
