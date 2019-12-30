@@ -51,7 +51,6 @@ public class Sprite extends Rect {
                 scale, scale,
                 angle
         );
-
     }
 
     public void resize(Rect worldBounds){

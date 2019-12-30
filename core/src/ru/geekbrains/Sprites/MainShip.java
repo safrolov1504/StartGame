@@ -1,12 +1,12 @@
 package ru.geekbrains.Sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import javax.xml.bind.ValidationEvent;
 
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
@@ -33,15 +33,20 @@ public class MainShip extends Sprite {
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
 
+    private float startAnimationTimer;
+    private float animationInterval;
 
+    private Sound sound;
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"),1,2,2);
         this.bulletPool = bulletPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
-        bulletHeight = 0.01f;
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
+        bulletHeight = 0.02f;
         bulletV = new Vector2(0,0.5f);
         damage = 1;
+        animationInterval = 1f;
         v = new Vector2();
         v0 = new Vector2(0.3f,0);
     }
@@ -65,6 +70,12 @@ public class MainShip extends Sprite {
         if(getLeft() < worldBounds.getLeft()){
             setLeft(worldBounds.getLeft());
             stop();
+        }
+
+        startAnimationTimer +=delta;
+        if(startAnimationTimer>animationInterval){
+            startAnimationTimer =0;
+            shoot();
         }
 
     }
@@ -122,9 +133,6 @@ public class MainShip extends Sprite {
                 moveLeft();
                 pressedLeft = true;
                 break;
-            case Input.Keys.UP:
-                shoot();
-                break;
         }
         return false;
     }
@@ -169,6 +177,7 @@ public class MainShip extends Sprite {
 
     private void shoot(){
         Bullet bullet = bulletPool.obtain();
+        sound.play(0.07f);
         bullet.set(this,bulletRegion,pos,bulletV,bulletHeight,worldBounds,damage);
     }
 }

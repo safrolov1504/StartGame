@@ -7,5 +7,6 @@ public class BulletPool extends SpritePool<Bullet> {
     @Override
     public Bullet newObject() {
         return new Bullet();
+
     }
 }
