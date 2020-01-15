@@ -16,7 +16,7 @@ public class BaseScreen implements Screen, InputProcessor {
     protected SpriteBatch batch;
 
     private Rect screenBounds;//описывает экран с пиксеньной системой координат
-    private Rect worldBounds;//описывает мировую сисему координат
+    protected Rect worldBounds;//описывает мировую сисему координат
     private Rect glBounds;//описывает систему координат, которую использует openGL\
 
     //матрицы используются для преобразования из одной системы координат
