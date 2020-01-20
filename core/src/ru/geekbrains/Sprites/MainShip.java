@@ -31,7 +31,7 @@ public class MainShip extends Ship {
         this.reloadInterval = 0.7f;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletHeight = 0.02f;
-        this.hp = 1;
+        this.hp = 100;
         this.bulletV = new Vector2(0,0.5f);
         this.damage = 1;
         this.v = new Vector2();
