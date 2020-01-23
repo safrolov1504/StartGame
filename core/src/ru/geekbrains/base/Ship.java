@@ -81,6 +81,10 @@ public class Ship extends Sprite {
         damageAnimateTimer = 0f;
     }
 
+    public void addHp(int hpPlus){
+        hp+=hpPlus;
+    }
+
     @Override
     public void destroyed() {
         super.destroyed();
