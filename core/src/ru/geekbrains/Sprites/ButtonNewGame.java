@@ -9,6 +9,7 @@ import ru.geekbrains.screen.GameScreen;
 public class ButtonNewGame extends ScaledButton {
     private Rect worldBounds;
     private GameScreen gameScreen;
+    private static final float HEIGHT = 0.05f;
 
     public ButtonNewGame(TextureAtlas atlas, GameScreen gameScreen) {
         super(atlas.findRegion("button_new_game"));
@@ -19,7 +20,7 @@ public class ButtonNewGame extends ScaledButton {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         this.worldBounds = worldBounds;
-        setHeightProportion(0.05f);
+        setHeightProportion(HEIGHT);
         pos.set(0,-0.2f);
     }
 
