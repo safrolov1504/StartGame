@@ -26,12 +26,12 @@ public class MainShip extends Ship {
         super(atlas.findRegion("main_ship"),1,2,2);
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
-        this.shootSound=shootSound;
+        this.shootSound = shootSound;
         this.reloadTimer = 0f;
         this.reloadInterval = 0.7f;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletHeight = 0.02f;
-        this.hp = 100;
+        this.hp = 1;
         this.bulletV = new Vector2(0,0.5f);
         this.damage = 1;
         this.v = new Vector2();
@@ -169,5 +169,6 @@ public class MainShip extends Ship {
                 || bullet.getTop() < getBottom()
                 );
     }
+
 
 }

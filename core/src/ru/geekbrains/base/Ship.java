@@ -44,7 +44,7 @@ public class Ship extends Sprite {
     protected void shoot(){
         Bullet bullet = bulletPool.obtain();
         shootSound.play(0.07f);
-        bullet.set(this,bulletRegion,pos,bulletV,bulletHeight,worldBounds,damage);
+        bullet.set(this,bulletRegion, pos, bulletV,bulletHeight,worldBounds,damage);
         //System.out.println(bulletPool.getClass() + " "  + bullet.getOwner().getClass());
     }
 
@@ -66,6 +66,10 @@ public class Ship extends Sprite {
         return damage;
     }
 
+    public Vector2 getV() {
+        return v;
+    }
+
     public void damage(int damage){
         hp-=damage;
         if(hp<=0){
@@ -77,9 +81,17 @@ public class Ship extends Sprite {
         damageAnimateTimer = 0f;
     }
 
+    public void addHp(int hpPlus){
+        hp+=hpPlus;
+    }
+
     @Override
     public void destroyed() {
         super.destroyed();
         boom();
+    }
+
+    public int getHp() {
+        return hp;
     }
 }
