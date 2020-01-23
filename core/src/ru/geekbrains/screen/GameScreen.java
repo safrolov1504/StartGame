@@ -33,6 +33,7 @@ public class GameScreen extends BaseScreen {
 
     private Texture bg;
     private Background background;
+    private Background background2;
     private TextureAtlas atlas;
     private TextureAtlas atlasHelp;
 
@@ -67,6 +68,8 @@ public class GameScreen extends BaseScreen {
 
         bg = new Texture("background.jpg");
         background = new Background(new TextureRegion(bg));
+        bg = new Texture("bg2.jpg");
+        background2 = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
         atlasHelp = new TextureAtlas(Gdx.files.internal("textures/help.atlas"));
         stars = new TreckingStar[64];
@@ -82,19 +85,11 @@ public class GameScreen extends BaseScreen {
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
         explotionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
 
-        font = new Font("font/font.fnt", "font/font.png");
+        //font = new Font("font/font.fnt", "font/font.png");
 
         sbFrags = new StringBuilder();
         sbHp = new StringBuilder();
         sbLevel = new StringBuilder();
-
-        bulletPool = new BulletPool();
-        explosionPool = new ExplosionPool(atlas,explotionSound);
-        enemyPool = new EnemyPool(bulletPool,explosionPool, bulletSound, worldBounds);
-        enemyGenerator = new EnemyGenerator(atlas,enemyPool,worldBounds);
-
-        helpPool = new HelpPool(worldBounds);
-        helpGenerator = new HelpGenerator(atlasHelp, helpPool,worldBounds);
 
         playNewGame();
 
@@ -104,8 +99,16 @@ public class GameScreen extends BaseScreen {
     }
 
     public void playNewGame(){
+        bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas,explotionSound);
+
         mainShip = new MainShip(atlas,bulletPool, explosionPool, laserSound);
+
+        enemyPool = new EnemyPool(bulletPool,explosionPool, bulletSound, worldBounds);
+        enemyGenerator = new EnemyGenerator(atlas,enemyPool,worldBounds);
+        helpPool = new HelpPool(worldBounds);
+        helpGenerator = new HelpGenerator(atlasHelp, helpPool,worldBounds);
+        font = new Font("font/font.fnt", "font/font.png");
 
         state = State.PLYING;
         frags = 0;
@@ -144,7 +147,11 @@ public class GameScreen extends BaseScreen {
         batch.begin();
 
         //здесь будет рисоваться все
-        background.draw(batch);
+        if(enemyGenerator.getLevel() % 2 != 0 ){
+            background.draw(batch);
+        } else {
+            background2.draw(batch);
+        }
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
@@ -152,15 +159,15 @@ public class GameScreen extends BaseScreen {
         explosionPool.drawActiveSprites(batch);
 
         if(state == State.PLYING) {
+            printInfo(true,FONT_PADDING,FONT_PADDING);
             mainShip.draw(batch);
             bulletPool.drawActiveSprites(batch);
             enemyPool.drawActiveSprites(batch);
             helpPool.drawActiveSprites(batch);
-            printInfo(true,FONT_PADDING,FONT_PADDING);
         } else if(state == State.GAME_OVER){
+            printInfo(false, FONT_SIZE_RL_GAMEOVER,FONT_SIZE_TOP_GAMEOVER);
             gameOver.draw(batch);
             buttonNewGame.draw(batch);
-            printInfo(false, FONT_SIZE_RL_GAMEOVER,FONT_SIZE_TOP_GAMEOVER);
         }
         batch.end();
     }
@@ -184,8 +191,9 @@ public class GameScreen extends BaseScreen {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         this.worldBounds = worldBounds;
-        background.resize(worldBounds);
         font.setSize(FONT_SIZE);
+        background.resize(worldBounds);
+        background2.resize(worldBounds);
         for (int i = 0; i < stars.length; i++) {
             stars[i].resize(worldBounds);
         }

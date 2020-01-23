@@ -31,6 +31,8 @@ public class EnemyGenerator {
     private static float ENEMY_BIG_RELOAD_INTERVAL = 1f;
     private static int ENEMY_BIG_HP = 10;
 
+    private static int FRAGS_FOR_NEXT_LEVEL =10;
+
     private final TextureRegion [] enemySmallRegions;
     private final TextureRegion [] enemyMediumRegions;
     private final TextureRegion [] enemyBigRegions;
@@ -50,6 +52,7 @@ public class EnemyGenerator {
 
     private int level = 1;
 
+
     public EnemyGenerator(TextureAtlas textureAtlas,EnemyPool enemyPool,Rect worldBounds) {
         TextureRegion enemy0 = textureAtlas.findRegion("enemy0");
         TextureRegion enemy1 = textureAtlas.findRegion("enemy1");
@@ -66,7 +69,7 @@ public class EnemyGenerator {
 
     public void generate(float delta, int frags){
         generateTimer+=delta;
-        level =frags / 4 + 1;
+        level =frags / FRAGS_FOR_NEXT_LEVEL + 1;
         if(generateTimer > generateInterval){
             generateTimer = 0f;
             EnemyShip enemyShip = enemyPool.obtain();

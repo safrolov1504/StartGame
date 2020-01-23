@@ -3,11 +3,16 @@ package ru.geekbrains.Sprites;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.base.Ship;
+import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 
-public class Help extends Ship {
+public class Help extends Sprite {
     private enum State {DESCENT, FLY}
+
+    private Rect worldBounds;
+    private Vector2 v0;
+    private Vector2 v;
+    private int hp;
 
     private State state;
     private Vector2 descentV = new Vector2(0,-0.15f);
@@ -21,6 +26,7 @@ public class Help extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
+        pos.mulAdd(v,delta);
         switch (state) {
             case DESCENT:
                 if(getTop() <=worldBounds.getTop()){
@@ -54,8 +60,7 @@ public class Help extends Ship {
         state = Help.State.DESCENT;
     }
 
-    @Override
-    public void destroyed() {
-        setDestroyed(true);
+    public int getHp() {
+        return hp;
     }
 }
